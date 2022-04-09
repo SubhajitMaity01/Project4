@@ -54,6 +54,9 @@ const createUrl = async function (req, res){
             return res.status(400).send({status:false,message:"long url should be present"})
         }
 
+        // check long url if valid using the regix
+      if (/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(longUrl)) {
+
 
 
 
@@ -67,8 +70,7 @@ const createUrl = async function (req, res){
           return res.status(200).send(response)
       }
 
-      // check long url if valid using the validUrl.isUri method
-      if (validUrl.isUri(longUrl)) {
+      
         
             /* The findOne() provides a match to only the subset of the documents 
             in the collection that match the query. In this case, before creating the short URL,
@@ -92,7 +94,7 @@ const createUrl = async function (req, res){
 
             // check base url if valid using the validUrl.isUri method
               if (!validUrl.isUri(baseUrl)) {
-                    return res.status(401).json('Invalid base URL')
+                    return res.status(401).send('Invalid base URL')
                 }
                 // if valid, we create the url code
                 const urlCode = shortid.generate()
